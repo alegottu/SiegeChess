@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Pawn : MonoBehaviour
+public class Pawn : Piece
 {
     
 }

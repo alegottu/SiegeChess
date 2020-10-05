@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public abstract class Piece : MonoBehaviour
 {
     public Cell currentCell = null;
 
     [SerializeField] protected bool isWhite = false;
-    [SerializeField] protected Path path = null;
+    [SerializeField] protected SpriteRenderer sprite = null;
+    [SerializeField] protected Color selected = new Color();
 
     protected bool allowMove = false;
+    protected List<Cell> possibleCells = new List<Cell>();
 
     protected virtual void OnEnable()
     {
@@ -16,46 +19,35 @@ public abstract class Piece : MonoBehaviour
 
     protected virtual void SelectedObjectChangeEventHandler(GameObject clickedObject)
     {
-        if (clickedObject.Equals(gameObject))
+        if (clickedObject.Equals(currentCell.gameObject))
         {
             CreatePath();
         }
 
-        if (clickedObject.TryGetComponent(out Cell cell))
+        if (allowMove && clickedObject.TryGetComponent(out Cell cell) && possibleCells.Contains(cell))
         {
-            foreach (Collider2D collider in path.colliders)
+            if (cell.currentPiece)
             {
-                if (collider.OverlapPoint(cell.transform.position))
-                {
-                    cell = currentCell;
-                    transform.position = cell.transform.position;
-                    return;
-                }
+                Destroy(cell.currentPiece.gameObject);
             }
-        }
 
-        if (clickedObject.TryGetComponent(out Piece piece))
-        {
-            currentCell = piece.currentCell;
-            Destroy(piece.gameObject);
+            currentCell = cell;
+            cell.currentPiece = this;
+            RemovePath();
         }
     }
+
+    public abstract void Spawn();
 
     protected virtual void CreatePath()
     {
+        print(true);
         allowMove = true;
-
-        foreach (Collider2D collider in path.colliders)
-        {
-            collider.enabled = true;
-        }
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collider)
+    protected void RemovePath()
     {
-        if (collider.TryGetComponent(out Cell cell))
-        {
-            //change cell sprite
-        }
+        allowMove = false;
+        possibleCells = new List<Cell>();
     }
 }

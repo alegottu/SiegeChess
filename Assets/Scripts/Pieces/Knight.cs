@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Knight : MonoBehaviour
+public class Knight : Piece
 {
     
 }

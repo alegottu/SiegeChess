@@ -2,8 +2,8 @@
 
 public class Cell : MonoBehaviour
 {
-    public Vector2 bounds = Vector2.zero;
-    public SpriteRenderer sprite = null;
+    [HideInInspector] public Vector2 bounds = Vector2.zero;
+    [HideInInspector] public Piece currentPiece = null;
 
     [SerializeField] private Collider2D _bounds = null;
 

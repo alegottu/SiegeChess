@@ -19,6 +19,7 @@ public class ClickSelect : MonoBehaviour
             if (click)
             {
                 selectedObject = click.collider.gameObject;
+                print(selectedObject.name);
                 OnSelectedObjectChange?.Invoke(selectedObject);
             }
         }

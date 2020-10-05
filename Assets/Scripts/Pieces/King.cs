@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class King : MonoBehaviour
+public class King : Piece
 {
     
 }
