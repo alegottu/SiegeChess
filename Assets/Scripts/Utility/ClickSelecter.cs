@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class ClickSelect : MonoBehaviour
+public class ClickSelecter : MonoBehaviour
 {
     public static event Action<GameObject> OnSelectedObjectChange;
     private GameObject selectedObject = null;
@@ -19,7 +19,6 @@ public class ClickSelect : MonoBehaviour
             if (click)
             {
                 selectedObject = click.collider.gameObject;
-                print(selectedObject.name);
                 OnSelectedObjectChange?.Invoke(selectedObject);
             }
         }

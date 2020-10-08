@@ -46,7 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounds: {x: 0, y: 0}
+  currentPiece: {fileID: 0}
   _bounds: {fileID: 5363845698133342883}
+  spriteRender: {fileID: 4533110031120911286}
+  selected: {r: 1, g: 0.98004615, b: 0, a: 1}
 --- !u!212 &4533110031120911286
 SpriteRenderer:
   m_ObjectHideFlags: 0

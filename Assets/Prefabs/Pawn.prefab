@@ -1,26 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2022020236687772866
+--- !u!114 &7515927658943403504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6953169713051993916}
+  m_GameObject: {fileID: 5639274429948951742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a300dff883969074eac9599105c3ddb6, type: 3}
+  m_Script: {fileID: 11500000, guid: 10f620a01b987c84096b6c154b8ea7c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentCell: {fileID: 0}
-  spriteRender: {fileID: 8171059652186603457}
+  spriteRender: {fileID: 6870604357523407939}
   isWhite: 0
   movements:
-  - {x: 1, y: 1}
-  - {x: -1, y: 1}
-  - {x: 1, y: -1}
-  - {x: -1, y: -1}
---- !u!1001 &1968681893286856392
+  - {x: 0, y: 1}
+--- !u!1001 &3850028976251583818
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -82,28 +79,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7653663841284307209, guid: 8d8898696a602ed499f7f2d2079a9a22,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e86dcc8b2142c8547a476c3d4a7ce193,
-        type: 3}
     - target: {fileID: 8875669918106993140, guid: 8d8898696a602ed499f7f2d2079a9a22,
         type: 3}
       propertyPath: m_Name
-      value: Bishop
+      value: Pawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d8898696a602ed499f7f2d2079a9a22, type: 3}
---- !u!1 &6953169713051993916 stripped
+--- !u!1 &5639274429948951742 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8875669918106993140, guid: 8d8898696a602ed499f7f2d2079a9a22,
     type: 3}
-  m_PrefabInstance: {fileID: 1968681893286856392}
+  m_PrefabInstance: {fileID: 3850028976251583818}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &8171059652186603457 stripped
+--- !u!212 &6870604357523407939 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7653663841284307209, guid: 8d8898696a602ed499f7f2d2079a9a22,
     type: 3}
-  m_PrefabInstance: {fileID: 1968681893286856392}
+  m_PrefabInstance: {fileID: 3850028976251583818}
   m_PrefabAsset: {fileID: 0}
