@@ -9,10 +9,8 @@ public class Knight : Piece
         foreach (Vector2Int movement in movements)
         {
             Vector2Int nextPos = currentCellPos + movement;
-            bool inBoundsX = nextPos.x >= 0 && nextPos.x < 8;
-            bool inBoundsY = nextPos.y >= 0 && nextPos.y < 8;
 
-            if (inBoundsX && inBoundsY)
+            if (nextPos.x * nextPos.y < 64 && nextPos.x * nextPos.y >= 0)
             {
                 possibleCells.Add(CellManager.cells[nextPos]);
             }

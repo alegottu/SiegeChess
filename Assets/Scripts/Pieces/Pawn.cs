@@ -15,9 +15,10 @@ public class Pawn : Piece
             possibleCells.Add(nextCell);
         }
 
-        if (firstTurn)
+        Cell posssibleFirst = isWhite ? CellManager.cells[currentCellPos + movements[0] * 2] : CellManager.cells[currentCellPos - movements[0] * 2];
+        if (firstTurn && !posssibleFirst.currentPiece)
         {
-            possibleCells.Add(isWhite ? CellManager.cells[currentCellPos + movements[0] * 2] : CellManager.cells[currentCellPos - movements[0] * 2]);
+            possibleCells.Add(posssibleFirst);
         }
 
         Cell rightCell = CellManager.cells[nextPos + Vector2Int.right];
@@ -33,9 +34,9 @@ public class Pawn : Piece
         }
     }
 
-    protected override void RemovePath()
+    protected override void Move(Cell cell)
     {
-        base.RemovePath();
+        base.Move(cell);
 
         firstTurn = false;
     }

@@ -19,13 +19,10 @@ public abstract class Piece : MonoBehaviour
         ClickSelecter.OnSelectedObjectChange += SelectedObjectChangeEventHandler;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         currentCell.currentPiece = this;
         currentCellPos = CellManager.cellPositions[currentCell];
-
-        CreatePath();
-        StorePath();
     }
 
     protected virtual void SelectedObjectChangeEventHandler(GameObject clickedObject)
@@ -33,23 +30,15 @@ public abstract class Piece : MonoBehaviour
         if (clickedObject.Equals(currentCell.gameObject))
         {
             allowMove = true;
+
+            if (possibleCells.Count < 1)
+            {
+                CreatePath();
+            }
         }
         else if (allowMove && clickedObject.TryGetComponent(out Cell cell) && possibleCells.Contains(cell))
         {
-            if (cell.currentPiece)
-            {                 
-                Destroy(cell.currentPiece.gameObject);
-            }
-
-            currentCell.currentPiece = null;
-            currentCell = cell;
-            currentCellPos = CellManager.cellPositions[currentCell];
-            cell.currentPiece = this;
-            transform.position = cell.transform.position;
-
-            CreatePath();
-            StorePath();
-            allowMove = false;
+            Move(cell);
         }
     }
 
@@ -74,16 +63,16 @@ public abstract class Piece : MonoBehaviour
 
     protected virtual void RemovePath()
     {
+        possibleCells = new List<Cell>();
+
         // change possible sprites back to default
     }
 
     protected void AddPathDirection(Vector2Int movement, Vector2Int currentPos)
     {
         Vector2Int nextPos = currentPos + movement;
-        bool inBoundsX = nextPos.x >= 0 && nextPos.x < 8;
-        bool inBoundsY = nextPos.y >= 0 && nextPos.y < 8;
 
-        while (inBoundsX && inBoundsY)
+        while (nextPos.x * nextPos.y < 64 && nextPos.x * nextPos.y >= 0)
         {
             Cell nextCell = CellManager.cells[nextPos];
 
@@ -98,11 +87,30 @@ public abstract class Piece : MonoBehaviour
                     possibleCells.Add(nextCell);
                 }
 
-                break;
+                return;
             }
 
             nextPos += movement;
         }
+    }
+
+    protected virtual void Move(Cell cell)
+    {
+        if (cell.currentPiece)
+        {
+            Destroy(cell.currentPiece.gameObject);
+        }
+
+        currentCell.currentPiece = null;
+        currentCell = cell;
+        currentCellPos = CellManager.cellPositions[currentCell];
+        cell.currentPiece = this;
+        transform.position = cell.transform.position;
+
+        CreatePath(); // to see if the king is in check
+        StorePath();
+        RemovePath();
+        allowMove = false;
     }
 
     private void OnDisable()
