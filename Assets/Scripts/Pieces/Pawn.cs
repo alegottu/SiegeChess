@@ -6,8 +6,6 @@ public class Pawn : Piece
 
     protected override void CreatePath()
     {
-        base.CreatePath();
-
         Vector2Int nextPos = isWhite ? currentCellPos + movements[0] : currentCellPos - movements[0];
         Cell nextCell = CellManager.cells[nextPos];
         if (!nextCell.currentPiece)
@@ -21,14 +19,14 @@ public class Pawn : Piece
             possibleCells.Add(posssibleFirst);
         }
 
-        Cell rightCell = CellManager.cells[nextPos + Vector2Int.right];
-        if (rightCell.currentPiece && isWhite != rightCell.currentPiece.isWhite)
+        Cell rightCell = currentCellPos.x != 7 ? CellManager.cells[nextPos + Vector2Int.right] : null;
+        if (rightCell && rightCell.currentPiece && isWhite != rightCell.currentPiece.isWhite)
         {
             possibleCells.Add(rightCell);
         }
 
-        Cell leftCell = CellManager.cells[nextPos + Vector2Int.left];
-        if (leftCell.currentPiece && isWhite != rightCell.currentPiece.isWhite)
+        Cell leftCell = currentCellPos.x != 0 ? CellManager.cells[nextPos + Vector2Int.left] : null;
+        if (leftCell && leftCell.currentPiece && isWhite != leftCell.currentPiece.isWhite)
         {
             possibleCells.Add(leftCell);
         }
@@ -39,5 +37,9 @@ public class Pawn : Piece
         base.Move(cell);
 
         firstTurn = false;
+        if (isWhite ? currentCellPos.y == 7 : currentCellPos.x == 0)
+        {
+            // promote
+        }
     }
 }

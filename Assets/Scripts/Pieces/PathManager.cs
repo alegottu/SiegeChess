@@ -2,6 +2,6 @@
 
 public class PathManager
 {
-    public static List<Cell> whitePaths = new List<Cell>();
-    public static List<Cell> blackPaths = new List<Cell>();
+    public static List<List<Cell>> whitePaths = new List<List<Cell>>();
+    public static List<List<Cell>> blackPaths = new List<List<Cell>>();
 }

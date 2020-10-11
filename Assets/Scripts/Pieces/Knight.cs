@@ -4,15 +4,21 @@ public class Knight : Piece
 {
     protected override void CreatePath()
     {
-        base.CreatePath();
-
         foreach (Vector2Int movement in movements)
         {
             Vector2Int nextPos = currentCellPos + movement;
 
-            if (nextPos.x * nextPos.y < 64 && nextPos.x * nextPos.y >= 0)
+            if (InBounds(nextPos))
             {
-                possibleCells.Add(CellManager.cells[nextPos]);
+                Cell nextCell = CellManager.cells[nextPos];
+                if (!nextCell.currentPiece)
+                {
+                    possibleCells.Add(nextCell);
+                }
+                else if (isWhite != nextCell.currentPiece.isWhite)
+                {
+                    possibleCells.Add(nextCell);
+                }
             }
         }
     }
