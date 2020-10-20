@@ -8,5 +8,7 @@ public class Bishop : Piece
         {
             AddPathDirection(movement, currentCellPos);
         }
+
+        base.CreatePath();
     }
 }

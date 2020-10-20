@@ -30,6 +30,8 @@ public class Pawn : Piece
         {
             possibleCells.Add(leftCell);
         }
+
+        base.CreatePath();
     }
 
     protected override void Move(Cell cell)

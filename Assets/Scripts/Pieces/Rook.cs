@@ -8,5 +8,7 @@ public class Rook : Piece
         {
             AddPathDirection(movement, currentCellPos);
         }
+
+        base.CreatePath();
     }
 }

@@ -8,6 +8,7 @@ public abstract class Piece : MonoBehaviour
 
     [HideInInspector] public Cell currentCell = null;
     [HideInInspector] public List<Cell> possibleCells = new List<Cell>();
+    [HideInInspector] public Piece pinner = null;
     public SpriteRenderer spriteRender = null;
     [HideInInspector] public bool isWhite = false;
 
@@ -15,6 +16,7 @@ public abstract class Piece : MonoBehaviour
 
     protected bool allowMove = false;
     protected Vector2Int currentCellPos = Vector2Int.zero;
+    protected Piece pinnedPiece = null;
 
     protected virtual void OnEnable()
     {
@@ -41,7 +43,19 @@ public abstract class Piece : MonoBehaviour
         }
     }
 
-    protected abstract void CreatePath();
+    protected virtual void CreatePath()
+    {
+        if (pinner)
+        {
+            foreach (Cell cell in possibleCells)
+            {
+                if (!pinner.possibleCells.Contains(cell))
+                {
+                    possibleCells.Remove(cell);
+                }
+            }
+        }
+    }
 
     protected void StorePath()
     {
@@ -98,10 +112,28 @@ public abstract class Piece : MonoBehaviour
         }
     }
 
-    // checks for pins, reveal checks, or skewers
+    // checks for pins or reveal checks
     protected void CheckExtendedPathDirection(Vector2Int movement, Piece continueFrom)
     {
-        
+        Vector2Int nextPos = continueFrom.currentCellPos + movement;
+
+        while (InBounds(nextPos))
+        {
+            Cell nextCell = CellManager.cells[nextPos];
+
+            if (nextCell.currentPiece.TryGetComponent(out King king))
+            {
+                if (continueFrom.isWhite != isWhite)
+                {
+                    pinnedPiece = continueFrom;
+                    continueFrom.pinner = this;
+                }
+                else
+                {
+                    king.revealer = continueFrom;
+                }
+            }
+        }
     }
 
     protected virtual void Move(Cell cell)
@@ -109,6 +141,11 @@ public abstract class Piece : MonoBehaviour
         if (cell.currentPiece)
         {
             Destroy(cell.currentPiece.gameObject);
+        }
+
+        if (pinnedPiece)
+        {
+            pinnedPiece = null;
         }
 
         currentCell.currentPiece = null;

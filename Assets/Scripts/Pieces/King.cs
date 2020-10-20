@@ -7,6 +7,7 @@ public class King : Piece
     public static event Action<King> OnCheck;
 
     public bool inCheck = false;
+    public Piece revealer = null;
 
     [SerializeField] private Color _inCheck = new Color();
 

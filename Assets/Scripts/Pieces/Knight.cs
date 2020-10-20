@@ -21,5 +21,7 @@ public class Knight : Piece
                 }
             }
         }
+
+        base.CreatePath();
     }
 }
