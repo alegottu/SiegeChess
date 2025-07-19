@@ -47,8 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounds: {x: 0, y: 0}
   currentPiece: {fileID: 0}
-  _bounds: {fileID: 5363845698133342883}
+  standard: {r: 0, g: 0, b: 0, a: 0}
   spriteRender: {fileID: 4533110031120911286}
+  _bounds: {fileID: 5363845698133342883}
   selected: {r: 1, g: 0.98004615, b: 0, a: 1}
 --- !u!212 &4533110031120911286
 SpriteRenderer:
@@ -88,7 +89,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: f15aaafd42d955c4181a66d36037b149, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
