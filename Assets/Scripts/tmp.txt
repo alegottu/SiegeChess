@@ -1,0 +1,19 @@
+Known bugs:
+- Moves that put King into check not properly removed
+- Player allowed to make moves that don't resolve check; check is removed on next player's move incorrectly
+
+Improvements:
+- Flip board after each turn? Maybe an option to do so, or at least an indiction of whose turn it is
+- Highlight possible moves in some way
+- Do click on event instead of polling in Update at all times
+- Some kind of indication for an attempt on an illegal move
+
+Most likely solved:
+- Click one piece, then another piece, try illegal move: the original piece makes that move (if legal for that piece)
+- Click one piece, try illegal move, click another piece, then another, make a legal move: the piece that should move is eaten up, and the second to last piece actually makes the move
+
+Solved:
+- One player allowed to infinitely make moves
+
+Already improved:
+- Instead of event based system, call the code directly on the cell that is hit in ClickSelecter

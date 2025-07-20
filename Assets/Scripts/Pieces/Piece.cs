@@ -14,14 +14,8 @@ public abstract class Piece : MonoBehaviour
 
     [SerializeField] protected Vector2Int[] movements = null;
 
-    protected bool allowMove = false;
     protected Vector2Int currentCellPos = Vector2Int.zero;
     protected Piece pinnedPiece = null;
-
-    protected virtual void OnEnable()
-    {
-        ClickSelecter.OnSelectedObjectChange += SelectedObjectChangeEventHandler;
-    }
 
     protected virtual void Start()
     {
@@ -29,19 +23,28 @@ public abstract class Piece : MonoBehaviour
         currentCellPos = CellManager.cellPositions[currentCell];
     }
 
-    protected virtual void SelectedObjectChangeEventHandler(GameObject clickedObject)
+	// When this piece is clicked
+    public void Select()
     {
-        if (clickedObject.Equals(currentCell.gameObject))
-        {
-            allowMove = true;
-            RemovePath(); //to ensure that an outdated path isn't being used
-            CreatePath();
-        }
-        else if (allowMove && clickedObject.TryGetComponent(out Cell cell) && possibleCells.Contains(cell))
-        {
-            Move(cell);
-        }
+		CreatePath();
+		DrawPath();
     }
+
+	// When this piece is selected, but another cell was clicked
+	public bool Deselect(Cell cell)
+	{
+		bool result = false;
+
+		if (possibleCells.Contains(cell))
+		{
+			Move(cell);
+			result = true;
+		}
+		
+		// TODO: doing this here messes with path manager?
+		RemovePath();
+		return result;
+	}
 
     protected virtual void CreatePath()
     {
@@ -69,8 +72,21 @@ public abstract class Piece : MonoBehaviour
         }
     }
 
+	private void DrawPath()
+	{
+		foreach (Cell cell in possibleCells)
+		{
+			cell.MarkPossible();
+		}
+	}
+
     protected void RemovePath()
     {
+		foreach (Cell cell in possibleCells)
+		{
+			cell.Deselect(); // same as "unmarking" the cell
+		}
+
         possibleCells = new List<Cell>();
     }
 
@@ -159,16 +175,10 @@ public abstract class Piece : MonoBehaviour
         StorePath(); // to see if the king is in check
 
         onAnyPieceMove?.Invoke(this);
-        allowMove = false;
     }
 
     protected bool InBounds(Vector2Int pos)
     {
         return pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
-    }
-
-    private void OnDisable()
-    {
-        ClickSelecter.OnSelectedObjectChange -= SelectedObjectChangeEventHandler;
     }
 }

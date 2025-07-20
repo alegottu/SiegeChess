@@ -9,6 +9,7 @@ public class Cell : MonoBehaviour
 
     [SerializeField] private Collider2D _bounds = null;
     [SerializeField] private Color selected = new Color();
+	[SerializeField] private Color possible = new Color();
 
     private void Start()
     {
@@ -16,25 +17,18 @@ public class Cell : MonoBehaviour
         standard = spriteRender.color;
     }
 
-    private void OnEnable()
+    public void Select()
     {
-        ClickSelecter.OnSelectedObjectChange += SelectedObjectChangeEventHandler;
+		spriteRender.color = selected;
     }
+	
+	public void Deselect()
+	{
+		spriteRender.color = standard;
+	}
 
-    private void SelectedObjectChangeEventHandler(GameObject clickedObject)
-    {
-        if (clickedObject.Equals(gameObject))
-        {
-            spriteRender.color = selected;
-        }
-        else if (spriteRender.color.Equals(selected))
-        {
-            spriteRender.color = standard;
-        }
-    }
-
-    private void OnDisable()
-    {
-        ClickSelecter.OnSelectedObjectChange += SelectedObjectChangeEventHandler;
-    }
+	public void MarkPossible()
+	{
+		spriteRender.color = possible;
+	}
 }

@@ -14,10 +14,8 @@ public class King : Piece
     private List<List<Cell>> dangerousPaths = new List<List<Cell>>();
     private Piece dangerousPiece = null;
 
-    protected override void OnEnable()
+    private void OnEnable()
     {
-        base.OnEnable();
-
         onAnyPieceMove += OnAnyPieceMoveEventHandler;
         OnCheck += OnCheckEventHandler;
     }
@@ -124,5 +122,11 @@ public class King : Piece
         {
             //Game Over
         }
+    }
+
+	private void OnDisable()
+    {
+        onAnyPieceMove -= OnAnyPieceMoveEventHandler;
+        OnCheck -= OnCheckEventHandler;
     }
 }
